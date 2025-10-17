@@ -1,69 +1,57 @@
-# React + TypeScript + Vite
+## Descripción
+Esta PWA fue desarrollada con Vite + React + TypeScript + TailwindCSS, implementando capacidades offline-first, almacenamiento local con IndexedDB, estrategias de cache avanzado y sincronización en segundo plano (Background Sync).
+El objetivo es demostrar cómo una aplicación web puede funcionar correctamente sin conexión, almacenar datos localmente y sincronizarlos al volver la red.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Tecnologías utilizadas
+React + Vite
+TailwindCSS
+IndexedDB (mediante la librería idb)
+Service Worker (con estrategias de cache y sincronización)
+Background Sync API
+Push Notifications (estructura lista para integración)
 
-Currently, two official plugins are available:
+## Funcionalidades principales
+Funcionalidad	Descripción
+Almacenamiento offline	Las entradas se guardan en IndexedDB incluso sin conexión.
+Sincronización	Cuando la conexión vuelve, los datos pendientes se marcan como sincronizados.
+Detección de conexión	La interfaz muestra en tiempo real si el usuario está conectado o no.
+Estrategias de cache	Implementadas cache-first para el App Shell y network-first para navegación.
+Notificaciones push	Preparado para integrarse con FCM o claves VAPID.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Estructura del proyecto
+src/
+ ├─ components/
+ │   ├─ EntryForm.tsx      # Formulario con detección de conexión
+ │   ├─ EntryList.tsx      # Lista dinámica de entradas
+ ├─ lib/
+ │   └─ db.ts              # Gestión de IndexedDB y BroadcastChannel
+ ├─ sw.js                  # Service Worker con cache y sincronización
+ ├─ main.tsx               # Registro del SW y render principal
+ └─ index.css / tailwind.config.js
 
-## Expanding the ESLint configuration
+## Cómo ejecutar el proyecto
+# Instalar dependencias
+npm install
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Ejecutar en modo desarrollo
+npm run dev
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Compilar para producción
+npm run build
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+# Previsualizar build
+npm run preview
+Luego abre http://localhost:5173/ en el navegador.
+Puedes probar el modo offline desde DevTools > Network > Offline.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Pruebas realizadas
+Guardado de notas sin conexión.
+Recuperación automática desde IndexedDB.
+Sincronización al volver la red.
+PWA instalable y funcional offline.
+Detección de conexión visible en la interfaz.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## Créditos
+Proyecto desarrollado por Johan Emmanuel Balderas Alfonso
+para la actividad Funcionalidad offline, sincronización en segundo plano y notificaciones push en AWP.
