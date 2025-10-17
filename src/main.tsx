@@ -14,7 +14,17 @@ if ("serviceWorker" in navigator) {
   window.addEventListener("load", () => {
     navigator.serviceWorker
       .register("/sw.js")
-      .then(() => console.log("Service Worker registrado"))
-      .catch(err => console.error("Error registrando SW:", err));
+      .then((reg) => {
+        console.log("✅ Service Worker registrado con éxito:", reg.scope);
+        if (reg.waiting) {
+          reg.waiting.postMessage({ type: "SKIP_WAITING" });
+        }
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          console.log("🔁 Nueva versión del Service Worker activa. Recargando...");
+          window.location.reload();
+        });
+      })
+      .catch((err) => console.error("❌ Error al registrar el Service Worker:", err));
   });
 }
+
